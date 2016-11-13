@@ -1,0 +1,49 @@
+body {
+    padding: 20px;
+}
+
+input:hover,
+input:active,
+input:focus
+{
+    outline:0 !important;
+    -webkit-appearance:none;
+}
+
+.search-bar {
+    margin: 20px;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 50%;
+    border-radius: 500px;
+    padding-left: 10px;
+    border: solid 1px #ccc;
+}
+
+.list-item {
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid #d0d0d0;
+}
+
+.list-item:hover {
+    background-color: #eee;
+}
+
+.list-item-name {
+    margin: 5px;
+}
+
+.cover {
+    width: 300px;
+    height: 300px;
+    display: inline-block;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.cover.playing {
+    border: 5px solid #e45343;
+}
