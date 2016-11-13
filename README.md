@@ -1,4 +1,4 @@
-# React with Redux Starter
+# React Starter
 
 ###Getting Started###
 
@@ -8,8 +8,8 @@ Getting started with this repo.
 Checkout this repo, install dependencies, then start the gulp process with the following:
 
 ```
-	> git clone git@github.com:agunescu/ReactStarter.git
-	> cd ReactStarter
+	> git clone git@github.com:agunescu/SpotifyApp.git
+	> cd SpotifyApp
 	> npm install
 	> npm start
 ```
