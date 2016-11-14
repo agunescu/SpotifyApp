@@ -1,5 +1,5 @@
 /**
- * Parent component, the starting point of our app
+ * Parent component, the starting point of the application
  * @author Alex
  */
 
