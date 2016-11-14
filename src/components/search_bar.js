@@ -1,3 +1,8 @@
+/**
+ * Class based component that renders an input element used to search artist
+ * @author Alex
+ */
+
 import React, { Component } from 'react';
 
 class SearchBar extends Component {
@@ -19,8 +24,9 @@ class SearchBar extends Component {
     }
 
     /**
-     * Event handler for input
-     * @param term
+     * Event handler for input search
+     * Sets the state with the new searched value
+     * @param {String} term
      */
     onInputChange(term) {
         this.setState({term});

@@ -1,3 +1,8 @@
+/**
+ * Functional component that returns an audio list item
+ * @author Alex
+ */
+
 import React from 'react';
 
 const AudioListItem = ({audio, onAudioSelect}) => {
