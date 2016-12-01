@@ -1,5 +1,6 @@
 body {
     padding: 20px;
+    font-family: 'Roboto', sans-serif;
 }
 
 input:hover,
@@ -22,8 +23,16 @@ input:focus
     border: solid 1px #ccc;
 }
 
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+
 .list-item {
-    display: inline-block;
+    box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.5);
     margin: 10px;
     border: 1px solid #d0d0d0;
 }
@@ -39,7 +48,6 @@ input:focus
 .cover {
     width: 300px;
     height: 300px;
-    display: inline-block;
     background-size: cover;
     cursor: pointer;
 }

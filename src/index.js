@@ -4,7 +4,6 @@
  */
 
 import _ from 'lodash';
-import $ from 'jquery';
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import SearchBar from './components/search_bar';
@@ -15,50 +14,56 @@ class App extends Component {
         super(props);
 
         this.state = {
+            query: 'justin',
             audios: []
         };
 
         this.audioObject = null;
+    }
 
-        // Sets an initial search
-        this.searchArtist('justin');
+    // Sets an initial search
+    componentDidMount() {
+        const {query} = this.state;
+        this.searchArtist(query);
+    }
+
+    /**
+     * Method used to fetch data from Spotify
+     * @param {String} uri
+     */
+    static searchSpotify(uri) {
+        return fetch(uri, {method: 'GET'})
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+            });
     }
 
     /**
      * Service used for fetching artists data
-     * @param {String} term
+     * @param {String} query
      */
-    searchArtist(term) {
-        if (term) {
-            $.ajax({
-                url: 'https://api.spotify.com/v1/search',
-                data: {
-                    q: term,
-                    type: 'artist'
-                },
-                success: function (response) {
+    searchArtist = (query) => {
+        const uri = `https://api.spotify.com/v1/search?type=artist&limit=50&q=${query}`;
+
+        this.constructor.searchSpotify(uri)
+            .then(json => {
+                if (json.artists) {
                     this.setState({
-                        audios: response.artists.items
+                        audios: [...json.artists.items]
                     });
-                }.bind(this)
-            })
-        }
-    }
+                }
+            });
+    };
 
     /**
      * Service used for fetching audio tracks data
      * @param {String} albumId
-     * @param {Function} callback
      */
-    getTracks(albumId, callback) {
-        const ROOT_URL = `https://api.spotify.com/v1/artists/${albumId}/top-tracks?country=US`;
-
-        $.ajax({
-            url: ROOT_URL,
-            success: function (response) {
-                callback(response);
-            }.bind(this)
-        });
+    getTracks(albumId) {
+        const uri = `https://api.spotify.com/v1/artists/${albumId}/top-tracks?country=US`;
+        return this.constructor.searchSpotify(uri);
     }
 
     /**
@@ -66,34 +71,36 @@ class App extends Component {
      * It creates a new Audio object that plays a top track of the selected artist
      * @param {Event} e
      */
-    onSelect(e) {
-        var playingCssClass = 'playing',
+    onSelect = (e) => {
+        let me = this,
+            playingCssClass = 'playing',
             target = e.target;
 
         if (target !== null && target.classList.contains('cover')) {
             if (target.classList.contains(playingCssClass)) {
-                this.audioObject.pause();
+                me.audioObject.pause();
             } else {
-                if (this.audioObject) {
-                    this.audioObject.pause();
+                if (me.audioObject) {
+                    me.audioObject.pause();
                 }
 
-                this.getTracks(target.getAttribute('id'), function (data) {
-                    this.audioObject = new Audio(data.tracks[0].preview_url);
-                    this.audioObject.play();
-                    target.classList.add(playingCssClass);
+                me.getTracks(target.getAttribute('id'))
+                    .then((data) => {
+                        me.audioObject = new Audio(data.tracks[0].preview_url);
+                        me.audioObject.play();
+                        target.classList.add(playingCssClass);
 
-                    this.audioObject.addEventListener('ended', function () {
-                        target.classList.remove(playingCssClass);
-                    });
+                        me.audioObject.addEventListener('ended', function () {
+                            target.classList.remove(playingCssClass);
+                        });
 
-                    this.audioObject.addEventListener('pause', function () {
-                        target.classList.remove(playingCssClass);
-                    });
-                }.bind(this))
+                        me.audioObject.addEventListener('pause', function () {
+                            target.classList.remove(playingCssClass);
+                        });
+                    })
             }
         }
-    }
+    };
 
     render() {
         // Control how many times we allow the function to be executed over time.
@@ -104,7 +111,7 @@ class App extends Component {
             <div>
                 <SearchBar onSearchTermChange={albumSearch} />
                 <AudioList
-                    onAudioSelect={this.onSelect.bind(this)}
+                    onAudioSelect={this.onSelect}
                     audios={this.state.audios} />
             </div>
         );

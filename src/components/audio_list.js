@@ -20,7 +20,7 @@ const AudioList = (props) => {
     });
 
     return (
-        <ul>
+        <ul className="list">
             {audioItems}
         </ul>
     );

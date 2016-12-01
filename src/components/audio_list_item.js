@@ -12,7 +12,7 @@ const AudioListItem = ({audio, onAudioSelect}) => {
     };
 
     return (
-        <li onClick={(e) => onAudioSelect(e, audio)} className="list-item">
+        <li className="list-item" onClick={(e) => onAudioSelect(e, audio)}>
             <div className="cover" id={audio.id} style={divStyle}></div>
             <div className="list-item-name">{audio.name}</div>
         </li>
