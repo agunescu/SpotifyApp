@@ -24,7 +24,7 @@ I've build an application that allows users to search for Spotify artists. It’
 For setup I've used my own boilerplate package, I didn't used codepen.io, because I created a structured app using different components,
 functional components and class based components.
 
-To fetch that data from the server, I've used jQuery as my HTTP library.
+To fetch that data from the server, I've used Fetch polyfill as my HTTP library.
 
 I’ve build this app using only React. By building this, I’ve covered numerous React core topics,
 including JSX, components, state.
